@@ -1,4 +1,4 @@
-public class TiketVIP extends TiketKonser {
+public class TiketVIP extends TiketKonser implements DapatDirefund, DapatDisimpan {
     private String nomorKursi;
     private String bonusMerch;
 
@@ -17,6 +17,21 @@ public class TiketVIP extends TiketKonser {
 
     @Override
     public void cetakTiketFisik() {
-        System.out.println("-> [AKSI] Wristband VIP dicetak + Pengambilan/Klaim benefit '" + this.bonusMerch + "' di Desk Khusus VIP.");
+        System.out.println("-> Wristband VIP dicetak + Pengambilan/Klaim benefit '" + this.bonusMerch + "' di Desk Khusus VIP.");
+    }
+
+    @Override
+    public void hitungBiayaLayanan() {
+        System.out.println("Biaya Layanan VIP: Rp 50.000 (Termasuk Fast Track & VIP Lounge)");
+    }
+
+    @Override
+    public void ajukanRefund(String alasan) {
+        System.out.println("Refund Tiket VIP BERHASIL disetujui 100% full amount. Alasan: " + alasan);
+    }
+
+    @Override
+    public void simpanKeWallet() {
+        System.out.println("Tiket VIP berhasil disimpan ke Wallet.");
     }
 }

@@ -2,10 +2,27 @@ import java.util.Scanner;
 
 public class ConcertFest {
 
-    public static void prosesSimulasiCheckIn(TiketKonser item) {
+    public static void prosesSimulasiCheckIn(TiketKonser item, Scanner scanner) {
         System.out.println("\n--- PROSES SIMULASI CHECK-IN TIKET ---");
         item.tampilkanInfo();     
         item.cetakTiketFisik();  
+        item.hitungBiayaLayanan();
+
+        if (item instanceof DapatDirefund) {
+            DapatDirefund tiketRefund = (DapatDirefund) item;
+            System.out.print("\nApakah Anda ingin mengajukan Refund tiket ini? (y/n): ");
+            String jawab = scanner.nextLine();
+            if (jawab.equalsIgnoreCase("y")) {
+                System.out.print("Masukkan Alasan Refund: ");
+                String alasan = scanner.nextLine();
+                tiketRefund.ajukanRefund(alasan);
+            }
+        }
+
+        if (item instanceof DapatDisimpan) {
+            DapatDisimpan tiketSimpan = (DapatDisimpan) item;
+            tiketSimpan.simpanKeWallet();
+        }
     }
 
     public static void cariTiket(String kataKunci, TiketKonser[] daftar, int total) {
@@ -103,18 +120,24 @@ public class ConcertFest {
                         }
                         System.out.println("[SUKSES] Tiket berhasil ditambahkan!");
                     } else {
-                        System.out.println("[ERROR] Array Penuh!");
+                        System.out.println("[ERROR] Kapasitas penyimpanan tiket sudah mencapai batas maksimum!");
                     }
                 }
 
                 case 2 -> {
-                    System.out.println("\n================================== DAFTAR TIKET  ==================================");
+                    System.out.println("\n================================== DAFTAR TIKET ==================================");
                     for (int i = 0; i < totalTiket; i++) {
                         System.out.print((i + 1) + ". ");
                         daftarTiket[i].tampilkanInfo(); 
+                        daftarTiket[i].hitungBiayaLayanan();
+
+                        if (daftarTiket[i] instanceof DapatDisimpan) {
+                            DapatDisimpan sim = (DapatDisimpan) daftarTiket[i];
+                            sim.simpanKeWallet();
+                        }
+                        System.out.println("-----------------------------------------------------------------------------------");
                     }
-                    System.out.println("-----------------------------------------------------------------------------------");
-                    System.out.println("Total Tiket Terjual (Static Counter): " + TiketKonser.totalTiketTerjual);
+                    System.out.println("Total Tiket Terjual: " + TiketKonser.totalTiketTerjual);
                 }
 
                 case 3 -> {
@@ -130,8 +153,9 @@ public class ConcertFest {
                         cariTiket(scanner.nextLine(), daftarTiket, totalTiket);
                     } else if (mode == 2) {
                         System.out.print("Masukkan Budget Maksimal: ");
-                        cariTiket(scanner.nextDouble(), daftarTiket, totalTiket);
+                        double maxHarga = scanner.nextDouble();
                         scanner.nextLine();
+                        cariTiket(maxHarga, daftarTiket, totalTiket);
                     }
                 }
 
@@ -142,7 +166,7 @@ public class ConcertFest {
                     scanner.nextLine();
 
                     if (idx >= 0 && idx < totalTiket) {
-                        prosesSimulasiCheckIn(daftarTiket[idx]); 
+                        prosesSimulasiCheckIn(daftarTiket[idx], scanner); 
                     } else {
                         System.out.println("Nomor tiket tidak valid!");
                     }

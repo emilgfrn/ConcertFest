@@ -1,4 +1,4 @@
-public class TiketCAT extends TiketKonser {
+public class TiketCAT extends TiketKonser implements DapatDisimpan {
     private String nomorTribun; 
 
     public TiketCAT(String kodeTiket, String namaKonser, double hargaDasar, String nomorTribun) {
@@ -18,6 +18,16 @@ public class TiketCAT extends TiketKonser {
 
     @Override
     public void cetakTiketFisik() {
-        System.out.println("-> [AKSI] E-Ticket QR Code dicetak di Mesin Mandiri Gate Tribun.");
+        System.out.println("-> E-Ticket QR Code dicetak di Mesin Mandiri Gate Tribun.");
+    }
+
+    @Override
+    public void hitungBiayaLayanan() {
+        System.out.println("Biaya Layanan CAT/Tribun: Rp 15.000");
+    }
+
+    @Override
+    public void simpanKeWallet() {
+        System.out.println("Tiket CAT berhasil disimpan ke Wallet.");
     }
 }

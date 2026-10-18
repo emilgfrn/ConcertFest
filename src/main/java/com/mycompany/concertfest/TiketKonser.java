@@ -1,4 +1,4 @@
-public class TiketKonser {
+public abstract class TiketKonser {
     private String kodeTiket;
     private String namaKonser;
     private double hargaDasar;
@@ -28,11 +28,13 @@ public class TiketKonser {
     }
 
     public void tampilkanInfo() {
-        System.out.printf("Kode: %-6s | Konser: %-22s | Harga: Rp %,10.2f", 
+        System.out.printf("Kode: %-12s | Konser: %-30s | Harga: Rp %,10.2f", 
                           this.kodeTiket, this.namaKonser, this.hargaDasar);
     }
 
     public void cetakTiketFisik() {
         System.out.println("-> Mencetak tiket standar di gate masuk.");
     }
+
+    public abstract void hitungBiayaLayanan();
 }

@@ -1,4 +1,4 @@
-public class TiketFestival extends TiketKonser {
+public class TiketFestival extends TiketKonser implements DapatDirefund {
     private String zonaBerdiri;
 
     public TiketFestival(String kodeTiket, String namaKonser, double hargaDasar, String zonaBerdiri) {
@@ -15,6 +15,16 @@ public class TiketFestival extends TiketKonser {
 
     @Override
     public void cetakTiketFisik() {
-        System.out.println("-> [AKSI] Wristband Festival dicetak + Scan QR Code Gate Masuk.");
+        System.out.println("-> Wristband Festival dicetak + Scan QR Code Gate Masuk.");
+    }
+
+    @Override
+    public void hitungBiayaLayanan() {
+        System.out.println("Biaya Layanan Festival: Rp 20.000");
+    }
+
+    @Override
+    public void ajukanRefund(String alasan) {
+        System.out.println("Refund Tiket Festival BERHASIL (Dipotong biaya admin 20%). Alasan: " + alasan);
     }
 }
